@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en-GB" dir="ltr">
+    <head>
+		<title>Samuel Cousin</title>
+		<!-- For video background, see: https://github.com/georgepaterson/jquery-videobackground */ -->
+		<meta charset="utf-8">
+		<link rel="icon" type="image/ico" href="./favicon.ico"/>
+		<style>
+			.video-background {
+				position: absolute;
+				top: 0;
+				left: 0;
+				overflow: hidden;
+				width: 100%;
+				height: 100%;
+				z-index: 1;
+			}
+			.video-background video {
+				min-height: 100%; 
+				min-width:100%; 
+			}
+			#page {
+				position: relative; 
+				z-index: 1;
+				width: 960px;
+				color: #FFF;
+				margin: 0 auto;
+			}
+			#main {
+				width: 100%;
+				height: 100%;
+				padding: 0px;
+				overflow: hidden;
+				z-index: 10;
+			}
+			
+
+	/* Smaller than standard 960 (devices and browsers) */
+	@media only screen and (max-width: 959px) {#content {width: 950px;} }
+
+	/* Tablet Portrait size to standard 960 (devices and browsers) */
+	@media only screen and (min-width: 768px) and (max-width: 959px) {#content {width: 700px;}}
+
+	/* All Mobile Sizes (devices and browser) */
+	@media only screen and (max-width: 767px) {#content {width: 650px;}}
+
+	/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+	@media only screen and (min-width: 480px) and (max-width: 767px) {#content {width: 380px;}}
+
+	/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+	@media only screen and (max-width: 479px) {#content {width: 280px;}}
+		
+		</style>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script src="script/jquery.videobackground.js"></script>
+		<script>
+			var videos = ["1", "2", "3", "4", "5", "6", "7"];
+			var chooseVideo = videos[Math.floor(Math.random()*videos.length)];
+			var fullVideoPathMP4 = 'https://s3.amazonaws.com/samuelcousin/video/' + chooseVideo + '-mp4.mp4';
+			var fullVideoPathWEBM = 'https://s3.amazonaws.com/samuelcousin/video/' + chooseVideo + '-webmsd.webm';
+			var fullVideoPathOGG = 'https://s3.amazonaws.com/samuelcousin/video/' + chooseVideo + '-oggtheora.ogv';
+			var fullVideoPathPOSTER = 'https://s3.amazonaws.com/samuelcousin/photo/' + chooseVideo + '.png';
+		
+			$(document).ready(function() {
+				$('body').css('display', 'none');
+				$('body').fadeIn(1000);
+				$('body').prepend('<a class="portfolio-link" href="http://portfolio.samuelcousin.com"></a>');
+				$('.portfolio-link').prepend('<div class="video-background"></div>');
+				$('.video-background').videobackground({
+					poster: fullVideoPathPOSTER,
+					videoSource: [
+						[fullVideoPathMP4, 'video/mp4'],
+						[fullVideoPathWEBM, 'video/webm'],
+						[fullVideoPathOGG, 'video/ogg']
+						],
+					loadedCallback: function() {
+						$(this).videobackground('mute');
+					}
+				});
+				$('.portfolio-link').click(function(event) {
+				event.preventDefault();
+
+				newLocation = this.href;
+
+				$('body').fadeOut(1000, newpage);
+
+				});
+			
+			function newpage() {
+
+				window.location = newLocation;
+
+			}
+			});
+			setTimeout(function () {
+					$('.portfolio-link').click();
+				},5000); // 5 seconds
+		</script>
+    </head>
+    <body>
+		<div id="page">
+			<div id="page-group">
+				<div id="header" class="header" role="banner" ></div>
+				<div id="content">
+					<div id="main" role="main">
+					</div>
+				</div>
+			</div>
+			<div id="footer" class="footer" role="contentinfo"></div>
+		</div>
+    </body>
+</html>
